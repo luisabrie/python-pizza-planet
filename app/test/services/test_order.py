@@ -14,6 +14,7 @@ def test_create_order_service(create_order):
     pytest.assume(order['total_price'])
     pytest.assume(order['size'])
     pytest.assume(order['ingredients'])
+    pytest.assume(order['beverages'])
 
 def test_get_order_by_id_service(client, create_order, order_uri):
     current_order = create_order.json
