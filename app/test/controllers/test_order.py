@@ -41,8 +41,7 @@ def test_create(app, ingredients, size, client_data):
         pytest.assume(value == created_order[param])
         pytest.assume(created_order['_id'])
         pytest.assume(size_id == created_order['size']['_id'])
-
-        ingredients_in_detail = set(item['ingredient']['_id'] for item in created_order['detail'])
+        ingredients_in_detail = set(item['ingredient']['_id'] for item in created_order['ingredients'])
         pytest.assume(not ingredients_in_detail.difference(ingredient_ids))
 
 
@@ -65,7 +64,7 @@ def test_get_by_id(app, ingredients, size, client_data):
         pytest.assume(order_from_db[param] == value)
         pytest.assume(size_id == created_order['size']['_id'])
 
-        ingredients_in_detail = set(item['ingredient']['_id'] for item in created_order['detail'])
+        ingredients_in_detail = set(item['ingredient']['_id'] for item in created_order['ingredients'])
         pytest.assume(not ingredients_in_detail.difference(ingredient_ids))
 
 
