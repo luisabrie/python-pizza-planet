@@ -8,11 +8,16 @@ from .base import BaseController
 
 class OrderController(BaseController):
     manager = OrderManager
-    __required_info = ('client_name', 'client_dni', 'client_address', 'client_phone', 'size_id')
+    __required_info = ('client_name',
+                       'client_dni',
+                       'client_address',
+                       'client_phone',
+                       'size_id')
 
     @staticmethod
     def calculate_order_price(size_price: float, ingredients: list):
-        price_per_ingredient = sum(ingredient.price for ingredient in ingredients)
+        price_per_ingredient = sum(
+            ingredient.price for ingredient in ingredients)
         total_price = size_price + price_per_ingredient
         return round(total_price, 2)
 
