@@ -33,7 +33,7 @@ class OrderController(BaseController):
         if not size:
             return 'Invalid size for Order', None
         
-        if ("date" in current_order):
+        if ("date" in current_order and type(current_order["date"]) == str):
             current_order["date"] = datetime.fromisoformat(current_order["date"])
 
         ingredient_ids = current_order.pop('ingredients', [])
