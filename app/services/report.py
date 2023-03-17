@@ -5,7 +5,6 @@ from ..controllers import ReportController
 
 report = Blueprint('report', __name__)
 
-
 @report.route('/', methods=GET)
 def get_report():
     report, error = ReportController.get_reports()
