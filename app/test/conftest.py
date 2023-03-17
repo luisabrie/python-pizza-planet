@@ -12,6 +12,7 @@ from .fixtures.order import *
 from .fixtures.size import *
 from .fixtures.beverage import *
 from .fixtures.report import *
+from .fixtures.status import *
 
 @pytest.fixture
 def app():
