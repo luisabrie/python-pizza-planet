@@ -4,7 +4,7 @@ from ..common.utils import check_required_keys
 from ..repositories.managers import (IngredientManager, OrderManager,
                                     BeverageManager,SizeManager)
 from .base import BaseController
-
+from datetime import datetime
 
 class OrderController(BaseController):
     manager = OrderManager
@@ -32,6 +32,9 @@ class OrderController(BaseController):
 
         if not size:
             return 'Invalid size for Order', None
+        
+        if ("date" in current_order and type(current_order["date"]) == str):
+            current_order["date"] = datetime.fromisoformat(current_order["date"])
 
         ingredient_ids = current_order.pop('ingredients', [])
         beverage_ids = current_order.pop('beverages', [])

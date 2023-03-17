@@ -37,6 +37,11 @@ class BaseManager:
         cls.session.query(cls.model).filter_by(_id=_id).update(new_values)
         cls.session.commit()
         return cls.get_by_id(_id)
+    
+    @classmethod
+    def drop_all(cls):
+        cls.session.query(cls.model).delete()
+        cls.session.commit()
 
 
 class SizeManager(BaseManager):
@@ -70,7 +75,10 @@ class OrderManager(BaseManager):
         cls.session.add(new_order)
         cls.session.flush()
         cls.session.refresh(new_order)
-        cls.session.add_all((IngredientDetail(order_id=new_order._id, ingredient_id=ingredient._id, ingredient_price=ingredient.price)
+        cls.session.add_all((IngredientDetail(
+            order_id=new_order._id, 
+            ingredient_id=ingredient._id, 
+            ingredient_price=ingredient.price)
                              for ingredient in ingredients))
         cls.session.add_all((BeverageDetail(order_id=new_order._id, beverage_id=beverage._id, beverage_price=beverage.price) 
                              for beverage in beverages))
@@ -80,6 +88,12 @@ class OrderManager(BaseManager):
     @classmethod
     def update(cls):
         raise NotImplementedError(f'Method not suported for {cls.__name__}')
+   
+    @classmethod
+    def drop_all(cls):
+        cls.session.query(IngredientDetail).delete()
+        cls.session.query(BeverageDetail).delete()
+        super().drop_all()
 
 
 class IndexManager(BaseManager):
@@ -87,3 +101,54 @@ class IndexManager(BaseManager):
     @classmethod
     def test_connection(cls):
         cls.session.query(column('1')).from_statement(text('SELECT 1')).all()
+
+class ReportManager(BaseManager):
+
+    @classmethod
+    def get_all_reports(cls):
+        return {
+            'most_requested_ingredient': cls.get_most_requested_ingredient(),
+            'month_with_most_revenue': cls.get_month_with_most_revenue(),
+            'top_three_customers': cls.get_top_three_customers(),
+        }
+    
+    @classmethod
+    def get_most_requested_ingredient(cls):
+        most_requested_ingredient = cls.session.query(Ingredient.name,
+            db.func.count(IngredientDetail.ingredient_id).label('total'))\
+            .join(IngredientDetail, IngredientDetail.ingredient_id == Ingredient._id)\
+            .group_by(Ingredient.name)\
+            .order_by(db.desc('total'))\
+            .limit(1)\
+            .first()
+        return {
+                 'name': most_requested_ingredient.name if most_requested_ingredient else '',
+                 'total': most_requested_ingredient.total if most_requested_ingredient else 0
+                }
+    @classmethod
+    def get_month_with_most_revenue(cls):
+        months = ['January', 'February', 'March', 'April', 'May', 'June', 
+                  'July', 'August', 'September', 'October', 'November', 'December']
+        month_with_most_revenue = cls.session.query(
+            db.func.extract('month', Order.date).label('month'),
+            db.func.sum(Order.total_price).label('total'))\
+            .group_by(db.func.extract('month', Order.date))\
+            .order_by(db.desc('total'))\
+            .limit(1)\
+            .first()
+        return {
+                'month': months[int(month_with_most_revenue.month) - 1] if month_with_most_revenue else '',
+                'total': month_with_most_revenue.total if month_with_most_revenue else 0
+                }
+    @classmethod
+    def get_top_three_customers(cls):
+        top_three_customers = cls.session.query(Order.client_name,
+            db.func.count(Order.client_dni).label('total'))\
+            .group_by(Order.client_dni)\
+            .order_by(db.desc('total'))\
+            .limit(3)\
+            .all()
+        return [{
+                'name': customer.client_name,
+                'total': customer.total
+                } for customer in top_three_customers]
