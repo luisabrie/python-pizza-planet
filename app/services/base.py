@@ -1,16 +1,15 @@
-from flask import jsonify, request
+from flask import request
+from ..decorators.handle_json_response import handle_json_response
 
 
 class BaseService:
     def __init__(self, controller):
         self.controller = controller
 
+    @handle_json_response
     def handle_request(self, func_name, *args, **kwargs):
         func = getattr(self.controller, func_name)
-        data, error = func(*args, **kwargs)
-        response = data if not error else {'error': error}
-        status_code = 200 if data else 404 if not error else 400
-        return jsonify(response), status_code
+        return func(*args, **kwargs)
 
     def get_all(self):
         return self.handle_request('get_all')

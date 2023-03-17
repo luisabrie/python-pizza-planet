@@ -1,8 +1,8 @@
-from app.common.http_methods import GET, POST, PUT
-from flask import Blueprint
-from app.services.base import BaseService
-
+from ..common.http_methods import GET, POST, PUT
+from ..services.base import BaseService
 from ..controllers import BeverageController
+
+from flask import Blueprint
 
 beverage = Blueprint('beverage', __name__)
 baseService = BaseService(BeverageController)
