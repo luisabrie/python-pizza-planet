@@ -1,8 +1,11 @@
 from sqlalchemy.exc import SQLAlchemyError
 
 from ..common.utils import check_required_keys
-from ..repositories.managers import (IngredientManager, OrderManager,
-                                    BeverageManager,SizeManager)
+from ..repositories.managers.order import OrderManager
+from ..repositories.managers.size import SizeManager
+from ..repositories.managers.beverage import BeverageManager
+from ..repositories.managers.ingredient import IngredientManager
+
 from .base import BaseController
 from datetime import datetime
 
@@ -16,9 +19,9 @@ class OrderController(BaseController):
 
     @staticmethod
     def calculate_order_price(size_price: float, ingredients: list, beverages: list):
-        price_per_ingredient = sum(ingredient.price for ingredient in ingredients)
-        price_per_beverage = sum(beverage.price for beverage in beverages)
-        total_price = size_price + price_per_ingredient + price_per_beverage
+        total_price_for_ingredients = sum(ingredient.price for ingredient in ingredients)
+        total_price_for_beverages = sum(beverage.price for beverage in beverages)
+        total_price = size_price + total_price_for_ingredients + total_price_for_beverages
         return round(total_price, 2)
 
     @classmethod

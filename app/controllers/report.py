@@ -1,4 +1,4 @@
-from ..repositories.managers import ReportManager
+from ..repositories.managers.report import ReportManager
 from sqlalchemy.exc import SQLAlchemyError
 
 

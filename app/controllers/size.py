@@ -1,4 +1,4 @@
-from ..repositories.managers import SizeManager
+from ..repositories.managers.size import SizeManager
 from .base import BaseController
 
 

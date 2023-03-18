@@ -1,5 +1,7 @@
-from seed.abstract_seeder import AbstractSeeder
 from faker import Faker
+
+from .abstract_seeder import AbstractSeeder
+
 
 fake = Faker()
 
