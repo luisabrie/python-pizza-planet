@@ -35,6 +35,12 @@ git clone https://github.com/ioet/python-pizza-planet.git
 docker-compose up -d
 ```
 
+-  Copy the `.env.example` file to `.env` and fill the variables
+
+```bash
+cp .env.example .env
+```
+
 - Create a virtual environment in the root folder of the project
 
 ```bash
