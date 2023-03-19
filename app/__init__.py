@@ -1,7 +1,10 @@
+from dotenv import load_dotenv
+
 import inspect
 
 from flask import Blueprint, Flask
 
+load_dotenv()
 
 def create_app(config_class: str):
     flask_app = Flask(__name__)
