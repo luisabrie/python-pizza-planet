@@ -1,4 +1,4 @@
-name: CI Workflow for Pizza
+name: CI Workflow for Pizza Backend
 
 on:
   pull_request:
