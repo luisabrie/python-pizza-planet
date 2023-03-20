@@ -40,6 +40,7 @@ custom:
 functions:
  app:
    handler: wsgi_handler.handler
+   timeout: 15
    vpc:
       securityGroupIds:
         - Fn::GetAtt: [ServerlessVPC, DefaultSecurityGroup]
