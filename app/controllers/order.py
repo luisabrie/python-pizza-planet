@@ -9,6 +9,9 @@ from ..repositories.managers.ingredient import IngredientManager
 from .base import BaseController
 from datetime import datetime
 
+import logging 
+
+
 class OrderController(BaseController):
     manager = OrderManager
     __required_info = ('client_name',
@@ -48,4 +51,5 @@ class OrderController(BaseController):
             order_with_price = {**current_order, 'total_price': price}
             return cls.manager.create(order_with_price, ingredients, beverages), None
         except (SQLAlchemyError, RuntimeError) as ex:
+            logging.error(ex)
             return None, str(ex)
