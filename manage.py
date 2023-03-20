@@ -13,7 +13,7 @@ from app.repositories.models import Ingredient, Order, IngredientDetail, Size
 
 from seed import seeder
 
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.DEBUG, force=True)
 
 manager = FlaskGroup(flask_app)
 
