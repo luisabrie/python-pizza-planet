@@ -150,3 +150,7 @@ migrations/
 pizza.sqlite
 .vscode/launch.json
 .vscode/tasks.json
+.serverless/
+node_modules/
+package-lock.json
+package.json
