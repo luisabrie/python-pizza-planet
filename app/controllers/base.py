@@ -9,7 +9,7 @@ class BaseController:
     @classmethod
     def get_by_id(cls, _id: Any) -> Tuple[Any, Optional[str]]:
         try:
-            return cls.manager.get_by_id(_id), None
+            return cls.manager.get_by_id(int(_id)), None
         except (SQLAlchemyError, RuntimeError) as ex:
             logging.error(ex)
             return None, str(ex)
