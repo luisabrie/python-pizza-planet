@@ -19,8 +19,7 @@ class BaseManager:
     @classmethod
     def get_by_id(cls, _id: Any):
         entry = cls.model.query.get(int(_id))
-        x = cls.serializer().dump(entry)
-        return x
+        return cls.serializer().dump(entry)
 
     @classmethod
     def create(cls, entry: dict):
