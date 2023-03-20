@@ -1,5 +1,8 @@
 from dotenv import load_dotenv
 
+import logging
+logging.getLogger().setLevel('DEBUG')
+
 import inspect
 
 from flask import Blueprint, Flask

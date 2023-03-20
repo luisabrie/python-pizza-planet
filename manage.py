@@ -1,6 +1,5 @@
 
 
-import logging
 
 import pytest
 from flask.cli import FlaskGroup
@@ -13,7 +12,7 @@ from app.repositories.models import Ingredient, Order, IngredientDetail, Size
 
 from seed import seeder
 
-logging.basicConfig(level=logging.DEBUG, force=True)
+
 
 manager = FlaskGroup(flask_app)
 
