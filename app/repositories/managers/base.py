@@ -18,7 +18,7 @@ class BaseManager:
 
     @classmethod
     def get_by_id(cls, _id: Any):
-        entry = cls.model.query.get(_id)
+        entry = cls.model.query.get(int(_id))
         return cls.serializer().dump(entry)
 
     @classmethod
@@ -31,7 +31,7 @@ class BaseManager:
 
     @classmethod
     def update(cls, _id: Any, new_values: dict):
-        cls.session.query(cls.model).filter_by(_id=_id).update(new_values)
+        cls.session.query(cls.model).filter_by(_id=int(_id)).update(new_values)
         cls.session.commit()
         return cls.get_by_id(_id)
 
