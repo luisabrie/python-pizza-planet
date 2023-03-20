@@ -4,7 +4,7 @@ name: CD Workflow for Pizza Backend
 
 on:
   workflow_run:
-    workflows: ["build"]
+    workflows: ["CI Workflow for Pizza Backend"]
     branches: [main]
     types:
       - completed
