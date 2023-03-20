@@ -34,4 +34,9 @@ jobs:
       - name: Check code coverage
         run: |
           coverage run --source=app -m pytest -v app/test && coverage report -m --fail-under=85 --omit 'app/test/*'
-          
+    env:
+      DB_USER: ${{ secrets.DB_USER }}
+      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      DB_NAME: ${{ secrets.DB_NAME }}
+      DB_HOST: ${{ secrets.DB_HOST }}
+      DB_PORT: ${{ secrets.DB_PORT }}

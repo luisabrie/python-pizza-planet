@@ -31,10 +31,10 @@ class OrderSeeder(AbstractSeeder):
     def generate_clients(self, count):
         self.clients = [
             {
-                'client_name': fake.name(),
-                'client_address': fake.address(),
-                'client_phone': fake.phone_number(),
-                'client_dni': fake.ssn(),
+                'client_name': fake.name()[:80],
+                'client_address': fake.address()[:128],
+                'client_phone': fake.phone_number()[:10],
+                'client_dni': fake.numerify(text='##########'),
             }
             for _ in range(count)
         ]

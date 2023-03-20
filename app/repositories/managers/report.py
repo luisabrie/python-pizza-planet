@@ -45,7 +45,7 @@ class ReportManager(BaseManager):
     def get_top_three_customers(cls):
         top_three_customers = cls.session.query(Order.client_name,
                                                 db.func.count(Order.client_dni).label('total'))\
-            .group_by(Order.client_dni)\
+            .group_by(Order.client_name)\
             .order_by(db.desc('total'))\
             .limit(3)\
             .all()

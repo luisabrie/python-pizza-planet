@@ -29,6 +29,18 @@ You will need the following general tools:
 git clone https://github.com/ioet/python-pizza-planet.git
 ```
 
+- Run the docker-compose file to start the database
+
+```bash
+docker-compose up -d
+```
+
+-  Copy the `.env.example` file to `.env` and fill the variables
+
+```bash
+cp .env.example .env
+```
+
 - Create a virtual environment in the root folder of the project
 
 ```bash
@@ -63,18 +75,18 @@ python3 manage.py db migrate
 python3 manage.py db upgrade
 ```
 
-- If you want to use the hot reload feature set FLASK_ENV before running the project:
+- If you want to use the hot reload feature set FLASK_DEBUG before running the project:
 
 _For linux/MacOS users:_
 
 ```bash
-export FLASK_ENV=development 
+export FLASK_DEBUG=true 
 ```
 
 _For windows users:_
 
 ```CMD
-set FLASK_ENV=development
+set FLASK_DEBUG=true
 ```
 
 - Run the project with:
