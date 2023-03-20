@@ -11,4 +11,4 @@ class BeverageManager(BaseManager):
 
     @classmethod
     def get_by_id_list(cls, ids: Sequence):
-        return cls.session.query(cls.model).filter(cls.model._id.in_(set(ids))).all() or []
+        return cls.session.query(cls.model).filter(cls.model._id.in_(set([int(id) for id in ids]))).all() or []

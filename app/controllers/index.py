@@ -3,7 +3,7 @@ from sqlalchemy.exc import SQLAlchemyError
 
 from ..repositories.managers.db_status import DBStatusManager
 
-
+import logging
 class IndexController:
 
     @staticmethod
@@ -12,4 +12,5 @@ class IndexController:
             DBStatusManager.test_connection()
             return True, ''
         except (SQLAlchemyError, RuntimeError) as ex:
+            logging.error(ex)
             return False, str(ex)
